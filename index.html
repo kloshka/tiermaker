@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href="styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <header class="header">
+        <div class="container header__inner">
+            <img class="header__logo" src="./tiermaker-logo.png" alt="Логотип Tiermaker">
+            <nav class="header__nav">
+                <a href="" class="header__link header__link_blue">Make a Template</a>
+                <a href="" class="header__link">My Account</a>
+            </nav>
+        </div>
+    </header>
+    <main class="content">
+        <h1 class="visually-hidden">Конструктор Tier-листов</h1>
+        <section class="controls">
+            <!-- <div class="container controls__inner">
+                <a href="" class="controls__link">Hide Template</a>
+                <a href="" class="controls__link">Delete Template</a>
+                <a href="" class="controls__link">Edit</a>
+                <a href="" class="controls__link">Sort/Hide Images</a>
+            </div> -->
+        </section>
+        <section class="tierlist-wrapper">
+            <h2 class="visually-hidden">Контейнер тирлистов</h2>
+            <div class="container tierlist">
+                <div class="tier" style="background-color:#FF7F7F">
+                    <p 
+                      class="tier__label" 
+                      contenteditable="true" 
+                      role="textbox" 
+                      aria-multiline="false" 
+                      aria-label="Название уровня"
+                    >
+                    S
+                    </p>
+                    <div class="tier__items">
+                    </div>
+                    <div class="tier__settings">
+                        <button type="button" class="tier__settings-button" aria-label="Настройки тира"></button>
+                        <div class="tier__move">
+                            <button type="button" class="tier__move-up" aria-label="Переместить тир вверх"></button>
+                            <button type="button" class="tier__move-down" aria-label="Переместить тир вниз"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tier">
+                    <p 
+                      class="tier__label" 
+                      contenteditable="true" 
+                      role="textbox" 
+                      aria-multiline="false" 
+                      aria-label="Название уровня"
+                      style="background-color:#FFBF7F"
+                    >
+                    A
+                    </p>
+                    <div class="tier__items">
+                    </div>
+                    <div class="tier__settings">
+                        <button type="button" class="tier__settings-button" aria-label="Настройки тира"></button>
+                        <div class="tier__move">
+                            <button type="button" class="tier__move-up" aria-label="Переместить тир вверх"></button>
+                            <button type="button" class="tier__move-down" aria-label="Переместить тир вниз"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tier">
+                    <p 
+                      class="tier__label" 
+                      contenteditable="true" 
+                      role="textbox" 
+                      aria-multiline="false" 
+                      aria-label="Название уровня"
+                      style="background-color:#FFDF7F"
+                    >
+                    B
+                    </p>
+                    <div class="tier__items">
+                    </div>
+                    <div class="tier__settings">
+                        <button type="button" class="tier__settings-button" aria-label="Настройки тира"></button>
+                        <div class="tier__move">
+                            <button type="button" class="tier__move-up" aria-label="Переместить тир вверх"></button>
+                            <button type="button" class="tier__move-down" aria-label="Переместить тир вниз"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tier" >
+                    <p 
+                      class="tier__label" 
+                      contenteditable="true" 
+                      role="textbox" 
+                      aria-multiline="false" 
+                      aria-label="Название уровня"
+                      style="background-color:#FFFF7F"
+                    >
+                    C
+                    </p>
+                    <div class="tier__items">
+                    </div>
+                    <div class="tier__settings">
+                        <button type="button" class="tier__settings-button" aria-label="Настройки тира"></button>
+                        <div class="tier__move">
+                            <button type="button" class="tier__move-up" aria-label="Переместить тир вверх"></button>
+                            <button type="button" class="tier__move-down" aria-label="Переместить тир вниз"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tier" >
+                    <p 
+                      style="background-color:#BFFF7F"
+                      class="tier__label" 
+                      contenteditable="true" 
+                      role="textbox" 
+                      aria-multiline="false" 
+                      aria-label="Название уровня"
+                    >
+                        D
+                    </p>
+                    <div class="tier__items">
+
+                    </div>
+                    <div class="tier__settings">
+                        <button type="button" class="tier__settings-button" aria-label="Настройки тира"></button>
+                        <div class="tier__move">
+                            <button class="tier__move-up" aria-label="Переместить тир вверх" type="button"></button>
+                            <button class="tier__move-down" aria-label="Переместить тир вниз" type="button"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="image-pool-wrapper">
+            <h2 class="visually-hidden">Доступные изображения</h2>
+            <div class="container image-pool">
+                <div class="tier__items tier__items--pool ">
+                    <div class="tier__item s1"></div>
+                    <div class="tier__item s3"></div>
+                    <div class="tier__item s2"></div>
+                </div>
+            </div>
+        </section>
+        <section class="file-wrapper">
+            <h2 class="visually-hidden">поле инпута</h2>
+            <div class="file container">
+                <input class="file__input" type="file" multiple>
+            </div>
+        </section>
+        <section class="overlay">
+            <div class="modal">
+                <span class="modal__close-btn">X</span>
+                <h2 class="modal__text">Choose a Label Background Color:</h2>
+                <div class="modal__color-select">
+                    <span style="background-color:#FF7F7F" class="modal__color-option"></span>
+                    <span style="background-color:#FFBF7F" class="modal__color-option"></span>
+                    <span style="background-color:#FFDF7F" class="modal__color-option"></span>
+                    <span style="background-color:#FFFF7F" class="modal__color-option"></span>
+                    <span style="background-color:#BFFF7F" class="modal__color-option"></span>
+                    <span style="background-color:#7FFF7F" class="modal__color-option"></span>
+                    <span style="background-color:#7FFFFF" class="modal__color-option"></span>
+                    <span style="background-color:#7FBFFF" class="modal__color-option"></span>
+                    <span style="background-color:#7F7FFF" class="modal__color-option"></span>
+                    <span style="background-color:#FF7FFF" class="modal__color-option"></span>
+                    <span style="background-color:#BF7FBF" class="modal__color-option"></span>
+                    <span style="background-color:#3B3B3B" class="modal__color-option"></span>
+                    <span style="background-color:#858585" class="modal__color-option"></span>
+                    <span style="background-color:#CFCFCF" class="modal__color-option"></span>
+                    <span style="background-color:#F7F7F7" class="modal__color-option"></span>
+                </div>
+                <h4 class="modal__text">Edit Label Text Below:</h4>
+                <textarea class="modal__textarea"></textarea>
+                <div class="modal__btns">
+                    <button type="button" class="modal__btn">Delete Row</button>
+                    <button type="button" class="modal__btn">Clear Row Images</button>
+                    <button type="button" class="modal__btn">Add a Row Above</button>
+                    <button type="button" class="modal__btn">Add a Row Below</button>
+                </div>
+            </div>                
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
