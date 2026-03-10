@@ -129,9 +129,9 @@ bindEvents() {
 new DragAndDrop()
 
 
-const input = document.querySelector('.file__input')
-const pool = document.querySelector('.tier__items--pool')
-input.addEventListener('change', (evt) => {
+const fileInputElement = document.querySelector('.file__input')
+const poolElement = document.querySelector('.tier__items--pool')
+fileInputElement.addEventListener('change', (evt) => {
   const files = evt.target.files
 
   for (const file of files) {
@@ -143,11 +143,11 @@ input.addEventListener('change', (evt) => {
       const div = document.createElement('div');
       div.className = 'tier__item';
       div.style.background = `url('${e.target.result}') center / cover no-repeat`;
-      pool.appendChild(div);
+      poolElement.appendChild(div);
     };
     reader.readAsDataURL(file);
   }
-  input.value = '';
+  fileInputElement.value = '';
 })
 
 
@@ -157,29 +157,78 @@ input.addEventListener('change', (evt) => {
 
 
 
+class TierModal {
+  constructor() {
+    this.editableTier = null;
+    this.chosenColorElement = null;
+    this.overlayElement = document.querySelector('.overlay');
+    this.colorsElements = document.querySelectorAll('.modal__color-option');
+    this.modalTextareaElement = document.querySelector('.modal__textarea');
+    this.bindEvents();
+  }
 
+  bindEvents() {
+    document.addEventListener('click', (evt) => {
+      const isOpened = this.openTierModal(evt);
+      if (isOpened) {
+        this.setDefaultModalValues();
+      }
+    });
+  }
 
+  openTierModal(evt) {
+    if (!evt.target.matches('.tier__settings-button')) return false;
+
+    this.overlayElement.classList.add('active');
+    this.editableTier = evt.target.closest('.tier');
+    return true;
+  }
+
+  setDefaultModalValues() {
+    const defaultLabelColor = getComputedStyle(this.editableTier.firstElementChild).backgroundColor;
+    this.colorsElements.forEach((item) => {
+      if (item.style.backgroundColor === defaultLabelColor) {
+        item.classList.add('chosen');
+        this.chosenColorElement = item;
+      }
+    });
+
+    const defaultLabelText = this.editableTier.children[0].textContent.trim();
+    this.modalTextareaElement.value = defaultLabelText;
+  }
+}
+// new TierModal();
 
 let editableTier;
 let chosenColorEl;
 
 const overlayElement = document.querySelector('.overlay')
-const colorsElements = document.querySelectorAll('.modal__color-option')
+function openTierModal(evt){
+  if (!evt.target.matches('.tier__settings-button')) return false
+
+  overlayElement.classList.add('active')
+  editableTier = evt.target.closest('.tier')
+  return true  
+}
+
+function setDefaultModalValues(){
+  const defaultLabelColor = getComputedStyle(editableTier.firstElementChild).backgroundColor
+  const colorsElements = document.querySelectorAll('.modal__color-option')
+  colorsElements.forEach((item) => {
+    if (item.style.backgroundColor == defaultLabelColor){
+      item.classList.add('chosen')
+      chosenColorEl = item;
+    }
+  })
+
+  const defaultLabelText = editableTier.children[0].textContent.trim();
+  const modalTextareaElement = document.querySelector('.modal__textarea')
+  modalTextareaElement.value = defaultLabelText
+}
+
 document.addEventListener('click', (evt) => {
-  if (evt.target.matches('.tier__settings-button')){
-    overlayElement.classList.add('active')
-    editableTier = evt.target.closest('.tier')
-
-
-    const defaultColor = getComputedStyle(editableTier.firstElementChild).backgroundColor
-    colorsElements.forEach((item) => {
-      console.log(getComputedStyle(editableTier.firstElementChild).backgroundColor)
-      if (item.style.backgroundColor == defaultColor){
-        item.classList.add('chosen')
-        chosenColorEl = item;
-      }
-    })
-  }
+  const isOpened = openTierModal(evt)
+  isOpened && setDefaultModalValues()
 })
 
 const closeOverlayElement = document.querySelector('.modal__close-btn')
@@ -232,5 +281,18 @@ modalBtns.addEventListener('click', (evt) => {
     editableTier.before(newTier)
   } else {
     editableTier.after(newTier)
+  }
+})
+
+
+document.addEventListener('click', (evt) => {
+  if (!evt.target.closest('.tier__move')){
+    return
+  }
+  let currentTierElement = evt.target.closest('.tier')
+  if (evt.target.classList.contains('tier__move-up')){
+    currentTierElement.previousElementSibling.before(currentTierElement)
+  } else if (evt.target.classList.contains('tier__move-down')){
+    currentTierElement.nextElementSibling.after(currentTierElement)
   }
 })
