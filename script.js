@@ -59,13 +59,22 @@ onPointerDown(evt) {
 onPointerMove(evt) {
   if (!this.state.isDragging) return;
 
-  const { clientX, clientY, pageX, pageY } = evt;
-  const { currentDraggingElement, placeholder, offsetX, offsetY } = this.state;
+  this.updateDraggedPosition(evt);
+  this.processDropPosition(evt);
+}
 
+updateDraggedPosition(evt) {
+  const { pageX, pageY } = evt;
+  const { currentDraggingElement, offsetX, offsetY } = this.state;
   const newX = pageX - offsetX;
   const newY = pageY - offsetY;
   currentDraggingElement.style.left = `${newX}px`;
   currentDraggingElement.style.top = `${newY}px`;
+}
+
+processDropPosition(evt) {
+  const { clientX, clientY } = evt;
+  const { currentDraggingElement, placeholder } = this.state;
 
   const target = evt.target;
   const container = target.closest('.tier__items');
@@ -79,22 +88,25 @@ onPointerMove(evt) {
   const row = Math.ceil((clientY - cTop) / eH);
   const rows = Math.round(cH / eH);
   const elemInRow = Math.floor(cW / eW);
-  console.log(row, rows, elemInRow);
 
   if (elementUnderCursor?.classList.contains('tier__item')) {
-    const { left, right } = elementUnderCursor.getBoundingClientRect();
-    const centerX = (left + right) / 2;
-
-    if (clientX <= centerX) {
-      elementUnderCursor.before(placeholder);
-    } else {
-      elementUnderCursor.after(placeholder);
-    }
+    this.insertRelativeToItem(elementUnderCursor, clientX, placeholder);
   } else if (row === rows) {
     container.appendChild(placeholder);
   } else {
     const index = row * elemInRow - 1;
     container.children[index].after(placeholder);
+  }
+}
+
+insertRelativeToItem(targetItem, clientX, placeholder) {
+  const { left, right } = targetItem.getBoundingClientRect();
+  const centerX = (left + right) / 2;
+
+  if (clientX <= centerX) {
+    targetItem.before(placeholder);
+  } else {
+    targetItem.after(placeholder);
   }
 }
 
@@ -158,12 +170,33 @@ fileInputElement.addEventListener('change', (evt) => {
 
 
 class TierModal {
+  selectors = {
+    overlay: '.overlay',
+    colorOption: '.modal__color-option',
+    textarea: '.modal__textarea',
+    closeBtn: '.modal__close-btn',
+    colorSelect: '.modal__color-select',
+    btns: '.modal__btns',
+    pool: '.tier__items--pool'
+  };
+
+  ACTIONS = {
+    DELETE: 'Delete Row',
+    CLEAR: 'Clear Row Images',
+    ADD_ABOVE: 'Add a Row Above',
+    ADD_BELOW: 'Add a Row Below'
+  };
+
   constructor() {
     this.editableTier = null;
     this.chosenColorElement = null;
-    this.overlayElement = document.querySelector('.overlay');
-    this.colorsElements = document.querySelectorAll('.modal__color-option');
-    this.modalTextareaElement = document.querySelector('.modal__textarea');
+    this.overlayElement = document.querySelector(this.selectors.overlay);
+    this.colorsElements = document.querySelectorAll(this.selectors.colorOption);
+    this.modalTextareaElement = document.querySelector(this.selectors.textarea);
+    this.closeOverlayElement = document.querySelector(this.selectors.closeBtn);
+    this.modalColorsElements = document.querySelector(this.selectors.colorSelect);
+    this.modalBtnsElements = document.querySelector(this.selectors.btns);
+    this.tierImagesPool = document.querySelector(this.selectors.pool);
     this.bindEvents();
   }
 
@@ -174,6 +207,72 @@ class TierModal {
         this.setDefaultModalValues();
       }
     });
+    
+    this.overlayElement.addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('overlay')) {
+        this.closeTierModal()
+      }
+    })
+
+    this.closeOverlayElement.addEventListener('click', () => {
+      this.closeTierModal()
+    });
+
+    this.modalColorsElements.addEventListener('click', (evt) => {  
+      this.handleColorSelection(evt)
+    });
+
+    this.modalTextareaElement.addEventListener('input', (evt) => {
+      this.editableTier.firstElementChild.textContent = evt.target.value
+    })
+
+    this.modalBtnsElements.addEventListener('click', (evt) => {
+      this.handleModalButtons(evt)
+    })
+  }
+
+  handleModalButtons(evt){
+    const btnText = evt.target.closest('.modal__btn').textContent
+    const editableTier = this.editableTier
+    if (btnText == this.ACTIONS.DELETE){
+      editableTier.remove()
+      this.closeTierModal()
+      this.editableTier = null
+      return
+    } else if (btnText == this.ACTIONS.CLEAR){
+      const clearedImages = editableTier.children[1].children
+      this.tierImagesPool.append(...clearedImages)
+      editableTier.children[1].innerHTML = '' 
+      return 
+    } 
+    let newTier = this.createTierFromCurrent()
+    if (btnText == this.ACTIONS.ADD_ABOVE) {
+      editableTier.before(newTier)
+    } else {
+      editableTier.after(newTier)
+    }
+  }
+  
+  createTierFromCurrent() {
+    let newTier = document.createElement('div')
+    newTier.classList.add('tier')
+    newTier.append(
+      this.editableTier.children[0].cloneNode(), 
+      this.editableTier.children[1].cloneNode(), 
+      this.editableTier.children[2].cloneNode(true)
+    )
+    newTier.children[0].textContent = ""
+    newTier.children[1].innerHTML = ''
+    return newTier
+  }
+
+  handleColorSelection(evt) {
+    const newChosenColorElement = evt.target.closest('.modal__color-option');
+    if (!newChosenColorElement) return; 
+    newChosenColorElement.classList.add('chosen');
+    this.chosenColorElement.classList.remove('chosen');
+    this.editableTier.firstElementChild.style.backgroundColor = newChosenColorElement.style.backgroundColor
+    this.chosenColorElement = newChosenColorElement
   }
 
   openTierModal(evt) {
@@ -182,6 +281,10 @@ class TierModal {
     this.overlayElement.classList.add('active');
     this.editableTier = evt.target.closest('.tier');
     return true;
+  }
+
+  closeTierModal() {
+    this.overlayElement.classList.remove('active')
   }
 
   setDefaultModalValues() {
@@ -197,92 +300,7 @@ class TierModal {
     this.modalTextareaElement.value = defaultLabelText;
   }
 }
-// new TierModal();
-
-let editableTier;
-let chosenColorEl;
-
-const overlayElement = document.querySelector('.overlay')
-function openTierModal(evt){
-  if (!evt.target.matches('.tier__settings-button')) return false
-
-  overlayElement.classList.add('active')
-  editableTier = evt.target.closest('.tier')
-  return true  
-}
-
-function setDefaultModalValues(){
-  const defaultLabelColor = getComputedStyle(editableTier.firstElementChild).backgroundColor
-  const colorsElements = document.querySelectorAll('.modal__color-option')
-  colorsElements.forEach((item) => {
-    if (item.style.backgroundColor == defaultLabelColor){
-      item.classList.add('chosen')
-      chosenColorEl = item;
-    }
-  })
-
-  const defaultLabelText = editableTier.children[0].textContent.trim();
-  const modalTextareaElement = document.querySelector('.modal__textarea')
-  modalTextareaElement.value = defaultLabelText
-}
-
-document.addEventListener('click', (evt) => {
-  const isOpened = openTierModal(evt)
-  isOpened && setDefaultModalValues()
-})
-
-const closeOverlayElement = document.querySelector('.modal__close-btn')
-closeOverlayElement.addEventListener('click', (evt) => {
-  overlayElement.classList.remove('active')
-})
-
-
-
-
-const modalColor = document.querySelector('.modal__color-select');
-modalColor.addEventListener('click', (evt) => {  
-  const newChosenColor = evt.target
-  newChosenColor.classList.add('chosen');
-  chosenColorEl.classList.remove('chosen')
-  editableTier.firstElementChild.style.backgroundColor = newChosenColor.style.backgroundColor
-  chosenColorEl = newChosenColor
-})
-
-
-
-const modalTextarea = document.querySelector('.modal__textarea')
-modalTextarea.addEventListener('change', (evt) => {
-  console.log(evt.target.value);
-  editableTier.firstElementChild.textContent = evt.target.value
-})
-
-const modalBtns = document.querySelector('.modal__btns')
-modalBtns.addEventListener('click', (evt) => {
-  const btnText = evt.target.textContent
-  if (btnText == 'Delete Row'){
-    editableTier.remove()
-    overlayElement.classList.remove('active')
-    return
-  } else if (btnText == 'Clear Row Images'){
-    console.log(editableTier.children[1])
-    editableTier.children[1].innerHTML = '' 
-    return 
-  } 
-  let newTier = document.createElement('div')
-  newTier.classList.add('tier')
-  newTier.append(
-    editableTier.children[0].cloneNode(), 
-    editableTier.children[1].cloneNode(), 
-    editableTier.children[2].cloneNode(true)
-  )
-  newTier.children[0].textContent = ""
-  newTier.children[1].innerHTML = ''
-  if (btnText == 'Add a Row Above') {
-    editableTier.before(newTier)
-  } else {
-    editableTier.after(newTier)
-  }
-})
+new TierModal();
 
 
 document.addEventListener('click', (evt) => {

@@ -244,6 +244,7 @@ a {
 
 
 .tier__items--pool {
+    min-height: 80px;
     background-color: transparent;
 }
 
