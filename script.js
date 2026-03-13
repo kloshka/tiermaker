@@ -1,6 +1,6 @@
 import { DragAndDrop } from "./drag-drop.js"
 import { TierModal } from "./tiermodal.js"
-import { TierList } from "./tierControls.js";
+import { TierList } from "./tiercontrols.js";
 import { initFileUpload } from "./fileUpload.js";
 
 new DragAndDrop();
