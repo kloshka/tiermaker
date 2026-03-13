@@ -11,126 +11,191 @@
         <div class="container header__inner">
             <img class="header__logo" src="./tiermaker-logo.png" alt="Логотип Tiermaker">
             <nav class="header__nav">
-                <a href="" class="header__link header__link_blue">Make a Template</a>
+                <a href="" class="header__link header__link--blue">Make a Template</a>
                 <a href="" class="header__link">My Account</a>
             </nav>
+            <button class="burger-button" type="button" title="Open menu">
+                <span class="visually-hidden">Open menu</span>
+                <span class="burger-button__line"></span>
+                <span class="burger-button__line"></span>
+                <span class="burger-button__line"></span>
+            </button>
+            <div class="header__burger-menu">
+                <div class="header__burger-item">Make a Template</div>
+                <div class="header__burger-item">My Account</div>
+            </div>
         </div>
     </header>
     <main class="content">
         <h1 class="visually-hidden">Конструктор Tier-листов</h1>
-        <section class="controls">
-            <!-- <div class="container controls__inner">
+        <!-- <section class="controls">
+            <div class="container controls__inner">
                 <a href="" class="controls__link">Hide Template</a>
                 <a href="" class="controls__link">Delete Template</a>
                 <a href="" class="controls__link">Edit</a>
                 <a href="" class="controls__link">Sort/Hide Images</a>
-            </div> -->
-        </section>
+            </div>
+        </section> -->
         <section class="tierlist-wrapper">
             <h2 class="visually-hidden">Контейнер тирлистов</h2>
             <div class="container tierlist">
-                <div class="tier" style="background-color:#FF7F7F">
-                    <p 
-                      class="tier__label" 
-                      contenteditable="true" 
-                      role="textbox" 
-                      aria-multiline="false" 
-                      aria-label="Название уровня"
+                <div class="tier">
+                    <p
+                        class="tier__label"
+                        contenteditable="true"
+                        role="textbox"
+                        aria-multiline="false"
+                        aria-label="Название уровня"
+                        style="background-color:#FF7F7F"
                     >
-                    S
+                        S
                     </p>
-                    <div class="tier__items">
-                    </div>
+                    <div class="items-container tier__items"></div>
                     <div class="tier__settings">
-                        <button type="button" class="tier__settings-button" aria-label="Настройки тира"></button>
+                        <button
+                        type="button"
+                        class="tier__settings-button"
+                        aria-label="Настройки тира"
+                        ></button>
                         <div class="tier__move">
-                            <button type="button" class="tier__move-up" aria-label="Переместить тир вверх"></button>
-                            <button type="button" class="tier__move-down" aria-label="Переместить тир вниз"></button>
+                            <button
+                                type="button"
+                                class="tier__move-up"
+                                aria-label="Переместить тир вверх"
+                            ></button>
+                            <button
+                                type="button"
+                                class="tier__move-down"
+                                aria-label="Переместить тир вниз"
+                            ></button>
                         </div>
                     </div>
                 </div>
                 <div class="tier">
-                    <p 
-                      class="tier__label" 
-                      contenteditable="true" 
-                      role="textbox" 
-                      aria-multiline="false" 
-                      aria-label="Название уровня"
-                      style="background-color:#FFBF7F"
+                    <p
+                        class="tier__label"
+                        contenteditable="true"
+                        role="textbox"
+                        aria-multiline="false"
+                        aria-label="Название уровня"
+                        style="background-color:#FFBF7F"
                     >
-                    A
+                        A
                     </p>
-                    <div class="tier__items">
-                    </div>
+                    <div class="items-container tier__items"></div>
                     <div class="tier__settings">
-                        <button type="button" class="tier__settings-button" aria-label="Настройки тира"></button>
+                        <button
+                        type="button"
+                        class="tier__settings-button"
+                        aria-label="Настройки тира"
+                        ></button>
                         <div class="tier__move">
-                            <button type="button" class="tier__move-up" aria-label="Переместить тир вверх"></button>
-                            <button type="button" class="tier__move-down" aria-label="Переместить тир вниз"></button>
+                            <button
+                                type="button"
+                                class="tier__move-up"
+                                aria-label="Переместить тир вверх"
+                            ></button>
+                            <button
+                                type="button"
+                                class="tier__move-down"
+                                aria-label="Переместить тир вниз"
+                            ></button>
                         </div>
                     </div>
                 </div>
                 <div class="tier">
-                    <p 
-                      class="tier__label" 
-                      contenteditable="true" 
-                      role="textbox" 
-                      aria-multiline="false" 
-                      aria-label="Название уровня"
-                      style="background-color:#FFDF7F"
+                    <p
+                        class="tier__label"
+                        contenteditable="true"
+                        role="textbox"
+                        aria-multiline="false"
+                        aria-label="Название уровня"
+                        style="background-color:#FFDF7F"
                     >
-                    B
+                        B
                     </p>
-                    <div class="tier__items">
-                    </div>
+                    <div class="items-container tier__items"></div>
                     <div class="tier__settings">
-                        <button type="button" class="tier__settings-button" aria-label="Настройки тира"></button>
+                        <button
+                        type="button"
+                        class="tier__settings-button"
+                        aria-label="Настройки тира"
+                        ></button>
                         <div class="tier__move">
-                            <button type="button" class="tier__move-up" aria-label="Переместить тир вверх"></button>
-                            <button type="button" class="tier__move-down" aria-label="Переместить тир вниз"></button>
+                            <button
+                                type="button"
+                                class="tier__move-up"
+                                aria-label="Переместить тир вверх"
+                            ></button>
+                            <button
+                                type="button"
+                                class="tier__move-down"
+                                aria-label="Переместить тир вниз"
+                            ></button>
                         </div>
                     </div>
                 </div>
-                <div class="tier" >
-                    <p 
-                      class="tier__label" 
-                      contenteditable="true" 
-                      role="textbox" 
-                      aria-multiline="false" 
-                      aria-label="Название уровня"
-                      style="background-color:#FFFF7F"
+                <div class="tier">
+                    <p
+                        class="tier__label"
+                        contenteditable="true"
+                        role="textbox"
+                        aria-multiline="false"
+                        aria-label="Название уровня"
+                        style="background-color:#FFFF7F"
                     >
-                    C
+                        C
                     </p>
-                    <div class="tier__items">
-                    </div>
+                    <div class="items-container tier__items"></div>
                     <div class="tier__settings">
-                        <button type="button" class="tier__settings-button" aria-label="Настройки тира"></button>
+                        <button
+                        type="button"
+                        class="tier__settings-button"
+                        aria-label="Настройки тира"
+                        ></button>
                         <div class="tier__move">
-                            <button type="button" class="tier__move-up" aria-label="Переместить тир вверх"></button>
-                            <button type="button" class="tier__move-down" aria-label="Переместить тир вниз"></button>
+                            <button
+                                type="button"
+                                class="tier__move-up"
+                                aria-label="Переместить тир вверх"
+                            ></button>
+                            <button
+                                type="button"
+                                class="tier__move-down"
+                                aria-label="Переместить тир вниз"
+                            ></button>
                         </div>
                     </div>
                 </div>
-                <div class="tier" >
-                    <p 
-                      style="background-color:#BFFF7F"
-                      class="tier__label" 
-                      contenteditable="true" 
-                      role="textbox" 
-                      aria-multiline="false" 
-                      aria-label="Название уровня"
+                <div class="tier">
+                    <p
+                        class="tier__label"
+                        contenteditable="true"
+                        role="textbox"
+                        aria-multiline="false"
+                        aria-label="Название уровня"
+                        style="background-color:#BFFF7F"
                     >
                         D
                     </p>
-                    <div class="tier__items">
-
-                    </div>
+                    <div class="items-container tier__items"></div>
                     <div class="tier__settings">
-                        <button type="button" class="tier__settings-button" aria-label="Настройки тира"></button>
+                        <button
+                        type="button"
+                        class="tier__settings-button"
+                        aria-label="Настройки тира"
+                        ></button>
                         <div class="tier__move">
-                            <button class="tier__move-up" aria-label="Переместить тир вверх" type="button"></button>
-                            <button class="tier__move-down" aria-label="Переместить тир вниз" type="button"></button>
+                            <button
+                                type="button"
+                                class="tier__move-up"
+                                aria-label="Переместить тир вверх"
+                            ></button>
+                            <button
+                                type="button"
+                                class="tier__move-down"
+                                aria-label="Переместить тир вниз"
+                            ></button>
                         </div>
                     </div>
                 </div>
@@ -139,22 +204,22 @@
         <section class="image-pool-wrapper">
             <h2 class="visually-hidden">Доступные изображения</h2>
             <div class="container image-pool">
-                <div class="tier__items tier__items--pool ">
+                <div class="items-container image-pool__items">
                     <div class="tier__item s1"></div>
                     <div class="tier__item s3"></div>
                     <div class="tier__item s2"></div>
                 </div>
             </div>
         </section>
-        <section class="file-wrapper">
-            <h2 class="visually-hidden">поле инпута</h2>
-            <div class="file container">
+        <section class="file-wrapper container">
+            <h2 class="visually-hidden">Поле инпута</h2>
+            <div class="file">
                 <input class="file__input" type="file" multiple>
             </div>
         </section>
         <section class="overlay">
             <div class="modal">
-                <span class="modal__close-btn">X</span>
+                <button type="button" class="modal__close-btn">X</button>
                 <h2 class="modal__text">Choose a Label Background Color:</h2>
                 <div class="modal__color-select">
                     <span style="background-color:#FF7F7F" class="modal__color-option"></span>
@@ -184,6 +249,6 @@
             </div>                
         </section>
     </main>
-    <script src="script.js"></script>
+    <script src="script.js" type="module"></script>
 </body>
 </html>
